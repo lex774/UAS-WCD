@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Jobs - LocalLink</title>
+    <link rel="stylesheet" href="styles\jobs.css">
+    </head>
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <header class="mb-8 text-center">
+            <h1 class="font-headline text-4xl font-bold">Available Jobs</h1>
+            <p class="text-muted-foreground mt-2">Find your next freelance opportunity.</p>
+        </header>
+
+        <div class="mb-8 p-6 bg-card rounded-lg shadow">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                <div>
+                    <label for="search-jobs" class="block text-sm font-medium mb-1">Search Jobs</label>
+                    <div class="relative">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                        <input
+                            id="search-jobs"
+                            type="text"
+                            placeholder="Keywords, title..."
+                            class="input pl-10"
+                        />
+                    </div>
+                </div>
+                <div>
+                    <label for="category-filter" class="block text-sm font-medium mb-1">Category</label>
+                    <select id="category-filter" class="select-trigger">
+                        <option value="all">All Categories</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Graphic Design">Graphic Design</option>
+                        <option value="Content Writing">Content Writing</option>
+                        <option value="Digital Marketing">Digital Marketing</option>
+                        <option value="Video Editing">Video Editing</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="location-filter" class="block text-sm font-medium mb-1">Location</label>
+                    <select id="location-filter" class="select-trigger">
+                        <option value="all">All Locations</option>
+                        <option value="Remote">Remote</option>
+                        <option value="Jakarta">Jakarta</option>
+                        <option value="Bandung">Bandung</option>
+                        <option value="Surabaya">Surabaya</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="job-card">
+                <h3 class="job-title"><a href="job-details.html?id=1" class="job-link">Frontend Developer Needed</a></h3>
+                <p class="job-company-name">Tech Innovators Inc.</p>
+                <p class="job-description">We are looking for a skilled Frontend Developer to build responsive web applications...</p>
+                <div class="job-meta">
+                    <span class="badge badge-secondary">Web Development</span>
+                    <span class="badge badge-outline"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg> Remote</span>
+                    <span class="badge badge-outline"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg> $50/hour</span>
+                </div>
+                <a href="job-details.html?id=1" class="view-details-button">View Details</a>
+            </div>
+
+            <div class="job-card">
+                <h3 class="job-title"><a href="job-details.html?id=2" class="job-link">Content Writer for Blog</a></h3>
+                <p class="job-company-name">ContentFlow Agency</p>
+                <p class="job-description">Seeking a creative content writer for regular blog posts on tech and lifestyle topics...</p>
+                <div class="job-meta">
+                    <span class="badge badge-secondary">Content Writing</span>
+                    <span class="badge badge-outline"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg> Jakarta</span>
+                    <span class="badge badge-outline"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg> $800/project</span>
+                </div>
+                <a href="job-details.html?id=2" class="view-details-button">View Details</a>
+            </div>
+
+            <div class="job-card">
+                <h3 class="job-title"><a href="job-details.html?id=3" class="job-link">Mobile App UI/UX Designer</a></h3>
+                <p class="job-company-name">Design Studio X</p>
+                <p class="job-description">Designing intuitive and engaging user interfaces for iOS and Android applications...</p>
+                <div class="job-meta">
+                    <span class="badge badge-secondary">Graphic Design</span>
+                    <span class="badge badge-outline"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg> Bandung</span>
+                    <span class="badge badge-outline"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg> $1200/month</span>
+                </div>
+                <a href="job-details.html?id=3" class="view-details-button">View Details</a>
+            </div>
+            </div>
+
+        <aside class="related-jobs-section">
+            <h2 class="related-jobs-title">Related Jobs You Might Like</h2>
+            <div class="related-jobs-grid">
+                <div class="related-job-card">
+                    <h4 class="related-job-title"><a href="job-details.html?id=4">Senior React Developer</a></h4>
+                    <p class="related-job-company">Global Solutions Ltd.</p>
+                    <div class="related-job-meta">
+                        <span class="badge badge-outline"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg> Remote</span>
+                        <span class="badge badge-outline"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg> $70/hour</span>
+                    </div>
+                </div>
+                 <div class="related-job-card">
+                    <h4 class="related-job-title"><a href="job-details.html?id=5">SEO Specialist</a></h4>
+                    <p class="related-job-company">Marketing Pros</p>
+                    <div class="related-job-meta">
+                        <span class="badge badge-outline"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg> Jakarta</span>
+                        <span class="badge badge-outline"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg> Negotiable</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</body>
+</html>
