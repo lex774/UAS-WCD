@@ -1,0 +1,292 @@
+/* Global Variables */
+:root {
+    --primary-color: #6366f1; /* Example primary color (indigo-500) */
+    --muted-foreground: #6b7280; /* Example text-muted-foreground (gray-500) */
+    --card-background: #ffffff; /* Example bg-card */
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Body Styling */
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    background-color: #f8f8f8;
+    color: #333;
+  }
+  
+  /* Container */
+  .container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Header */
+  
+  
+  /* Main Content */
+  .button.button-outline {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+    color: var(--primary-color); /* Sesuaikan warna sesuai palette */
+    border: 2px solid var(--primary-color);
+    background-color: transparent;
+    border-radius: 0.4rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.button.button-outline:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.button.button-outline:hover .mr-2 {
+    transform: translateX(-4px); /* Geser icon ke kiri saat hover */
+}
+
+/* Optional: Jika ingin efek shadow saat hover */
+.button.button-outline:hover {
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2); /* Warna shadow sesuai primary-color */
+}  
+  .main {
+    padding-top: 2rem;
+  }
+  .settings-section {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 2rem;
+  }
+  
+  .sidebar {
+    background-color: #fff;
+    padding: 1rem;
+    box-shadow: var(--shadow-md);
+  }
+  .general {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  .general-description {
+    color: var(--muted-foreground);
+  }
+  .sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+  .sidebar-link {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
+  .sidebar-link:hover {
+    color: var(--primary-color);
+  }
+
+  /* Custom Select - Theme Selector */
+  .theme-selector {
+    appearance: none;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0.830rem;
+    transition: 
+      background-color 0.3s ease,
+      transform 0.1s ease;
+    width: 3%;
+    min-width: 120px; /* minimal lebar untuk tampil rapi */
+    max-width: 80%; /* batasi lebar maksimal agar tidak sampai ke ujung card */
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+  
+  /* Hover */
+  .theme-selector:hover {
+    background-color: #4f46e5; /* indigo-600 - warna hover seperti tombol */
+  }
+  
+  /* Klik / Aktif */
+  .theme-selector:active,
+  .theme-selector:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); /* Ring fokus */
+    transform: translateY(1px);
+  }
+  
+  /* Icon panah custom untuk dropdown */
+  .theme-selector-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  .theme-selector-wrapper::after {
+    content: '\25BC'; /* Unicode ▼ */
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: white;
+    font-size: 0.8rem;
+    transition: color 0.3s ease;
+  }
+  
+  /* Content Cards */
+  .card {
+    background-color: var(--card-background);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-md);
+    border-radius: 0.5rem; /* Optional, for consistency */
+  }
+
+  .card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  .card-description {
+    color: var(--muted-foreground);
+    margin-bottom: 1rem;
+  }
+  .card-details {
+    margin-bottom: 1rem;
+  }
+  .card-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem; /* jarak antara ikon dan teks */
+    transition: 
+      background-color 0.3s ease,
+      transform 0.1s ease; /* tambahkan transisi untuk transform */
+  }
+  
+  /* Hover Tombol */
+  .card-button:hover {
+    background-color: #4f46e5; /* indigo-600 - warna hover profesional */
+  }
+  
+  /* Klik Tombol (Efek Pantulan) */
+  .card-button:active {
+    transform: translateY(2px); /* geser ke bawah */ 
+  } 
+
+  /* Styling untuk daftar legal */
+.legal-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .legal-links li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .legal-links a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    position: relative;
+  }
+  
+  /* Efek Hover - Warna lebih gelap */
+  .legal-links a:hover {
+    color: #4f46e5; /* indigo-600 */
+    transform: translateX(4px); /* Efek geser ke kanan untuk animasi halus */
+  }
+  
+  /* Optional: Garis bawah animasi */
+  .legal-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 1.5px;
+    background-color: #4f46e5;
+    transition: width 0.3s ease;
+  }
+  
+  .legal-links a:hover::after {
+    width: 100%;
+  }
+  
+  /* Sign Out Card - No special border */
+   .sign-out-card {
+    background-color: var(--card-background);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-md);
+    border-radius: 0.5rem; /* Optional, for consistency */
+  }
+  
+  /* Button Styling - Sign Out */
+  .sign-out-button {
+    background-color: #ef4444; /* Tailwind red-500 - warna profesional */
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem; /* jarak antara ikon dan teks */
+    transition: background-color 0.3s ease;
+  }
+  
+  .sign-out-button:hover {
+    background-color: #dc2626; /* red-600 - hover lebih gelap tapi tetap profesional */
+  }
+  
+  /* Icon inside the button */
+  .custom-icon {
+    color: #dc2626; 
+    font-size: 2.0rem; /* Ukuran ikon */
+    transition: all 0.3s ease;
+    margin-right: 2px;
+  }
+  
+  /* Footer */
+  .footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+}
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .footer-links a {
+    text-decoration: none;
+    color: var(--muted-foreground);
+  }
+  .footer-links a:hover {
+    color: var(--primary-color);
+  }

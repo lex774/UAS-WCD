@@ -22,6 +22,82 @@ body {
     color: #333;
 }
 
+/* --- Header Styles --- */
+.main-header {
+    background-color: var(--card-background);
+    border-bottom: 1px solid #e5e7eb; /* border-b */
+    padding: 1rem 0; /* py-4 */
+    box-shadow: var(--shadow-md);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* gap-2 */
+    font-size: 1.5rem; /* text-xl */
+    font-weight: 700; /* font-bold */
+    color: #333;
+    text-decoration: none;
+}
+
+.brand .logo {
+    height: 2.5rem; /* h-10 */
+    width: 2.5rem; /* w-10 */
+    border-radius: 0.25rem; /* rounded */
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 0.75rem; /* gap-3 */
+}
+
+/* --- Navigation Bar Styles --- */
+.main-nav {
+    position: sticky; /* Keep navigation sticky */
+    top: 0; /* Stick to the top of the viewport */
+    z-index: 1000; /* Ensure it stays above other content */
+    background-color: #ffffff; /* A slightly darker background than the body for contrast */
+    padding: 0.75rem 0; /* py-3 */
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: var(--shadow-md); /* Add shadow for better visibility when sticky */
+}
+
+.nav-content ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Center the nav links */
+    gap: 2rem; /* space-x-8 */
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #4b5563; /* gray-700 */
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    border-radius: 0.25rem;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+
+}
+
+.nav-link.active {
+    color: var(--primary-color);
+    font-weight: 600;
+    background-color: #eff6ff; /* A slightly more pronounced background for active */
+}
+
+
 /* Utilities */
 .container {
     max-width: 1200px;
@@ -99,14 +175,12 @@ body {
     .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
-/* Shadcn/ui like components styling */
-
 /* Input & Select */
 .input {
     display: flex;
     /* Adjusted to be more compact, matching typical Shadcn Input height (h-9) */
     height: 1.5rem; /* 36px */
-    width: 80%;
+    width: 90%;
     border: 1px solid var(--input-border);
     border-radius: 0.375rem; /* rounded-md */
     background-color: var(--card-background);
@@ -171,15 +245,33 @@ body {
 
 
 /* JobCard */
+#job-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+@media (min-width: 768px) {
+  #job-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+} 
+@media (min-width: 1024px) {
+  #job-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .job-card {
     background-color: var(--card-background);
-    padding: 1.5rem; /* p-6 */
-    border-radius: 0.5rem; /* rounded-lg */
+    padding: 2.5rem 1.5rem; /* padding atas bawah lebih besar, kiri kanan tetap */
+    border-radius: 0.5rem;
     box-shadow: var(--shadow-md);
     display: flex;
     flex-direction: column;
-    height: 100%; /* Ensures cards in a row have same height */
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Add transition for hover effect */
+    height: 100%;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .job-card:hover {
@@ -255,7 +347,6 @@ body {
 /* View Details Button */
 .view-details-button {
     display: inline-flex;
-    width: 100%; /* w-full */
     align-items: center;
     justify-content: center;
     border-radius: 0.375rem; /* rounded-md */
@@ -345,4 +436,76 @@ body {
 /* Loading State (Skeletons) - HTML included in WorkListPage but not styled as separate components */
 .animate-pulse > div {
     background-color: var(--muted-background);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+    color: #9ca3af;
+    font-size: 0.875rem;
+}
+
+/* Dropdown menu profil user */
+.profile-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.profile-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    object-fit: cover;
+    border: 2px solid #e5e7eb;
+    transition: box-shadow 0.2s;
+}
+.profile-avatar:hover {
+    box-shadow: 0 2px 8px rgba(99,102,241,0.15);
+}
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    border-radius: 0.5rem;
+    min-width: 180px;
+    z-index: 1001;
+    padding: 0.5rem 0;
+    animation: fadeInDropdown 0.2s;
+}
+.profile-menu:hover .dropdown-menu,
+.profile-menu:focus-within .dropdown-menu {
+    display: block;
+}
+@keyframes fadeInDropdown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    color: #374151;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background 0.2s, color 0.2s;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.dropdown-item:hover {
+    background: #f3f4f6;
+    color: var(--primary-color);
+}
+.dropdown-item .dropdown-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--primary-color);
+    flex-shrink: 0;
 }

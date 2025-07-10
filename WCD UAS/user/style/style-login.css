@@ -1,0 +1,131 @@
+/* Reset */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    min-height: 100vh;
+    color: #6b7280;
+}
+
+/* Flexbox untuk centering login container */
+body.d-flex.align-items-center.justify-content-center {
+    min-height: 100vh;
+}
+
+/* Responsive Login Container */
+.login-container {
+    width: 90%;
+    max-width: 400px;
+    margin: auto;
+    padding: 1rem;
+}
+
+/* Card Styling */
+.login-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.login-header {
+    background: linear-gradient(to right, #3498db, #2c3e50);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.login-body {
+    padding: 1.5rem;
+    background-color: white;
+}
+
+/* Form Control Focus Style */
+.form-control:focus {
+    box-shadow: 0 0 0 0.15rem rgba(52, 152, 219, 0.25);
+    border-color: #3498db;
+}
+
+/* Button Login */
+.btn-login {
+    background: linear-gradient(to right, #3498db, #2c3e50);
+    border: none;
+    padding: 0.5rem;
+    font-weight: 500;
+    color: white;
+    width: 100%;
+}
+
+/* Error Message Animation */
+.error-message {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.error-message.show {
+    max-height: 100px;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive Typography */
+.login-header h5 {
+    font-size: 1.2rem;
+}
+
+.login-header small {
+    font-size: 0.85rem;
+}
+
+/* Responsive Input Groups */
+.input-group-text i,
+.input-group .form-control {
+    font-size: 0.9rem;
+}
+
+/* Responsive Links */
+.d-flex.justify-content-between a.small {
+    font-size: 0.85rem;
+}
+
+/* Mobile responsive */
+@media (max-width: 576px) {
+    .login-container {
+        padding: 0.5rem;
+    }
+
+    .login-header {
+        padding: 1rem;
+    }
+
+    .login-header h5 {
+        font-size: 1rem;
+    }
+
+    .login-header small {
+        font-size: 0.75rem;
+    }
+
+    .input-group-text i {
+        font-size: 0.9rem;
+    }
+
+    .form-label {
+        font-size: 0.85rem;
+    }
+
+    .btn-login {
+        font-size: 0.9rem;
+    }
+
+    .form-check-label {
+        font-size: 0.8rem;
+    }
+}

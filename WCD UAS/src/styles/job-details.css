@@ -199,6 +199,7 @@ body {
     border-radius: 0.5rem; /* rounded-lg */
     border: 1px solid var(--border-color); /* border */
     overflow: hidden; /* For rounded corners on content */
+    margin-bottom: 1.5rem; /* Tambahkan jarak antar card */
 }
 
 .card-header {
@@ -296,4 +297,143 @@ body {
 /* Ensure icons within lists or text align correctly */
 .flex .icon {
     flex-shrink: 0;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+    color: #9ca3af;
+    font-size: 0.875rem;
+}
+
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+    /* Container max width full on mobile */
+    .container {
+        max-width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* Grid fallback to single column */
+    .lg\:grid-cols-3 {
+        grid-template-columns: 1fr !important;
+    }
+
+    .lg\:col-span-2,
+    .lg\:col-span-1 {
+        grid-column: span 1 / span 1 !important;
+    }
+
+    /* Button sizes */
+    .button-lg {
+        font-size: 1rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .button-sm {
+        font-size: 0.8rem;
+    }
+
+    /* Card Title */
+    .card-title {
+        font-size: 1.25rem;
+    }
+
+    /* Avatar */
+    .avatar {
+        height: 3rem;
+        width: 3rem;
+    }
+
+    /* Flex Direction */
+    .flex-col {
+        flex-direction: column;
+    }
+
+    .sm\:flex-row {
+        flex-direction: column !important;
+    }
+
+    /* Centered text on small screens */
+    .sm\:text-left {
+        text-align: center !important;
+    }
+
+    .sm\:items-start {
+        align-items: center !important;
+    }
+
+    /* Margin adjustments */
+    .mt-8 {
+        margin-top: 1.5rem;
+    }
+
+    .mb-8 {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Footer layout */
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .footer-brand,
+    .footer-section {
+        text-align: center;
+        align-items: center;
+    }
+
+    .footer-section h4 {
+        text-align: center;
+    }
+
+    .social-icons li a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .footer-bottom {
+        text-align: center;
+    }
+}
+
+/* Extra Small Devices (Mobile Phones) */
+@media (max-width: 480px) {
+    .text-3xl {
+        font-size: 1.5rem;
+    }
+
+    .text-xl {
+        font-size: 1rem;
+    }
+
+    .text-lg {
+        font-size: 0.9rem;
+    }
+
+    .text-sm {
+        font-size: 0.75rem;
+    }
+
+    .button-lg {
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+    }
+
+    .company-logo {
+        width: 100%;
+        height: auto;
+    }
+
+    .card-header,
+    .card-content {
+        padding: 1rem;
+    }
 }

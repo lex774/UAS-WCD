@@ -1,0 +1,163 @@
+/* Reset & Base Styles */
+* {
+    box-sizing: border-box;
+}
+
+body.register-bg {
+    min-height: 100vh;
+    background: var(--card-background, #fff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    font-family: sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+.signup-container {
+    width: 100%;
+    max-width: 420px;
+    margin: auto;
+    padding: 2.5rem 2rem 2rem 2rem;
+    background: var(--card-background, #fff);
+    border-radius: 1.2rem;
+    box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1));
+    transition: box-shadow 0.2s;
+}
+.signup-container:hover {
+    box-shadow: 0 12px 40px rgba(99,102,241,0.18);
+}
+
+.signup-container .text-center i.fa-briefcase {
+    color: var(--primary-color, #6366f1);
+    margin-bottom: 0.5rem;
+}
+
+.signup-container h2 {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: #22223b;
+}
+
+.signup-container p.text-muted {
+    font-size: 1rem;
+    color: var(--muted-foreground, #6b7280);
+}
+
+.form-label {
+    color: var(--primary-color, #6366f1);
+    font-weight: 500;
+}
+
+.input-group-text {
+    background: #f1f5f9;
+    color: var(--primary-color, #6366f1);
+    border: none;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color, #6366f1);
+    box-shadow: 0 0 0 2px rgba(99,102,241,0.15);
+}
+
+.btn-primary {
+    background-color: var(--primary-color, #6366f1);
+    border: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: 0.7rem 0;
+    border-radius: 0.5rem;
+    transition: background 0.2s;
+}
+.btn-primary:hover {
+    background-color: #4f46e5;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color, #6366f1);
+    border-color: var(--primary-color, #6366f1);
+}
+
+.social-login {
+    display: flex;
+    justify-content: center;
+    gap: 0.7rem;
+}
+
+.social-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    text-decoration: none !important;
+    font-size: 1.2rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(99,102,241,0.08);
+}
+.social-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 16px rgba(99,102,241,0.16);
+}
+
+@media (max-width: 576px) {
+    .signup-container {
+        padding: 1.2rem 0.5rem;
+        max-width: 98vw;
+    }
+    .signup-container h2 {
+        font-size: 1.2rem;
+    }
+    .signup-container p.text-muted {
+        font-size: 0.9rem;
+    }
+    .form-control {
+        font-size: 0.95rem;
+    }
+    .btn-primary {
+        font-size: 0.95rem;
+    }
+    .social-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+    }
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.login-card {
+    background: var(--card-background, #fff);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1));
+    padding: 2rem 2rem 1.5rem 2rem;
+}
+
+.login-header h5 {
+    color: var(--primary-color, #6366f1);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.login-header small {
+    color: var(--muted-foreground, #6b7280);
+}
+
+.login-body {
+    margin-top: 1.5rem;
+}
+
+@media (max-width: 500px) {
+    .login-card {
+        padding: 1.2rem 0.5rem;
+    }
+    .login-container {
+        max-width: 98vw;
+    }
+} 
