@@ -1,0 +1,470 @@
+body {
+  font-family: sans-serif;
+  background: #f8f8f8;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Modal & Form Pembayaran/Rating */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 0;
+  min-height: 100vh;
+  box-sizing: border-box;
+  transition: opacity 0.25s;
+  opacity: 0;
+}
+.modal.show { display: flex !important; opacity: 1; animation: fadeInModal 0.3s; }
+@keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
+.modal-content {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 1.2rem;
+  max-width: 480px;
+  min-width: 320px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  animation: slideInModal 0.3s;
+}
+@keyframes slideInModal { from { transform: translateY(40px) scale(0.97); opacity: 0.7; } to { transform: translateY(0) scale(1); opacity: 1; } }
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  cursor: pointer;
+  font-size: 1.7rem;
+  color: #6366f1;
+  background: none;
+  border: none;
+  z-index: 2;
+  transition: color 0.2s;
+}
+.modal-close:hover {
+  color: #ef4444;
+  background: #fef2f2;
+  border-radius: 50%;
+  transform: scale(1.13);
+  box-shadow: 0 2px 8px rgba(239,68,68,0.10);
+}
+
+/* Form Style */
+form label {
+  font-weight: 600;
+  color: #6366f1;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+form input[type="file"],
+form input[type="text"],
+form input[type="number"],
+form select,
+form textarea {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  border: 1.5px solid #cbd5e1;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  background: #f9fafb;
+  color: #333;
+  transition: border 0.18s;
+}
+form input[type="file"] {
+  padding: 0.3rem 0.2rem;
+  background: none;
+}
+form input:focus, form select:focus, form textarea:focus {
+  border-color: #6366f1;
+  outline: none;
+}
+form button[type="submit"], .modal-content .btn {
+  margin-top: 0.5rem;
+}
+
+/* Badge khusus pembayaran/rating */
+.badge-pembayaran {
+  background: #fef9c3;
+  color: #eab308;
+  border: 1.5px solid #eab308;
+  border-radius: 1.2rem;
+  padding: 0.4rem 1.1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+.badge-rating {
+  background: #e0e7ff;
+  color: #6366f1;
+  border: 1.5px solid #6366f1;
+  border-radius: 1.2rem;
+  padding: 0.4rem 1.1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+.badge-reviewed {
+  background: #facc15;
+  color: #222;
+  border: 1.5px solid #eab308;
+  font-weight: 600;
+}
+
+/* Rating select */
+.rating {
+  color: #facc15;
+  font-size: 1.2em;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 700px) {
+  .modal-content { padding: 1.2rem 0.7rem; max-width: 98vw; }
+}
+
+/* Progress Card Modern */
+.progress-card {
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 24px rgba(99,102,241,0.10);
+  padding: 2rem;
+  margin: 2rem 0;
+  max-width: 100vw;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.job-header h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+.job-header .company {
+  font-size: 1.1rem;
+  color: #6366f1;
+  margin-left: 0.7rem;
+  font-weight: 600;
+}
+.badge-status {
+  font-size: 1.1rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  background: #f3f4f6;
+  color: #6366f1;
+  border: 1.5px solid #6366f1;
+  box-shadow: 0 1px 4px rgba(99,102,241,0.07);
+}
+.badge-status.dikerjakan, .badge-status.sedang_dikerjakan { background: #f0f9ff; color: #0ea5e9; border-color: #0ea5e9; }
+.badge-status.sudah_dikerjakan, .badge-status.pekerjaan_selesai { background: #f0fdf4; color: #22c55e; border-color: #22c55e; }
+.badge-status.pekerjaan_sesuai { background: #fef9c3; color: #eab308; border-color: #eab308; }
+.badge-status.pembayaran_sudah_dilakukan { background: #fef2f2; color: #ef4444; border-color: #ef4444; }
+.badge-status.completed { background: #e0e7ff; color: #6366f1; border-color: #6366f1; }
+
+.progress-stepper {
+  display: flex;
+  gap: 1.5rem;
+  margin: 2rem 0 1.5rem 0;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  overflow-x: visible;
+  width: 100%;
+}
+.progress-step {
+  flex: 1 1 0;
+  min-width: 120px;
+  text-align: center;
+  position: relative;
+  padding: 0.7rem 0;
+  border-radius: 1.5rem;
+  background: #f3f4f6;
+  color: #888;
+  font-size: 1.05rem;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+.progress-step.active {
+  background: #6366f1;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.13);
+}
+.progress-step.completed {
+  background: #22c55e;
+  color: #fff;
+  font-weight: bold;
+}
+.progress-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: -0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.5rem;
+  height: 4px;
+  background: #e5e7eb;
+  z-index: 0;
+  border-radius: 2px;
+}
+.progress-step.completed:not(:last-child)::after {
+  background: #22c55e;
+}
+.progress-step.active:not(:last-child)::after {
+  background: #6366f1;
+}
+
+.progress-actions {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0 0.5rem 0;
+  flex-wrap: wrap;
+}
+.btn {
+  padding: 0.7rem 2rem;
+  border-radius: 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 1px 4px rgba(99,102,241,0.07);
+  border: none;
+  outline: none;
+}
+.btn-primary {
+  background: linear-gradient(90deg, #6366f1 60%, #8b5cf6 100%);
+  color: #fff;
+  border: none;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background: linear-gradient(90deg, #4f46e5 60%, #6366f1 100%);
+  color: #fff;
+}
+.btn-secondary {
+  background: #f3f4f6;
+  color: #6366f1;
+  border: 1.5px solid #6366f1;
+}
+.btn-success {
+  background: #22c55e;
+  color: #fff;
+  border: none;
+}
+.btn-success:hover, .btn-success:focus {
+  background: #16a34a;
+  color: #fff;
+}
+.progress-log {
+  margin-top: 1.5rem;
+  font-size: 0.98rem;
+  color: #6b7280;
+  background: #f9fafb;
+  border-radius: 0.7rem;
+  padding: 1rem 1.5rem;
+}
+@media (max-width: 900px) {
+  .progress-card { max-width: 98vw; }
+  .progress-step { min-width: 110px; font-size: 0.98rem; }
+}
+@media (max-width: 700px) {
+  .progress-card { padding: 1.1rem 0.5rem 1rem 0.5rem; }
+  .progress-stepper { flex-direction: column; gap: 0.7rem; flex-wrap: wrap; }
+  .progress-step { min-width: 0; }
+  .job-header h2 { font-size: 1.1rem; }
+} 
+
+/* Back Button Style (sama seperti daftar pelamar) */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, #6366f1 60%, #8b5cf6 100%);
+  color: #fff;
+  border: none;
+  border-radius: 0.6rem;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.13);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+.back-btn:hover {
+  background: linear-gradient(90deg, #4f46e5 60%, #6366f1 100%);
+  box-shadow: 0 4px 16px rgba(99,102,241,0.18);
+  transform: translateY(-2px) scale(1.03);
+  color: #fff;
+}
+
+/* Info Card for Welcome/Status */
+.info-card.info-welcome {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  background: #f0fdf4;
+  border: 1.5px solid #22c55e;
+  border-radius: 1.1rem;
+  box-shadow: 0 2px 12px rgba(34,197,94,0.07), 0 1.5px 6px rgba(0,0,0,0.04);
+  padding: 1.3rem 1.7rem;
+  margin: 1.2rem 0 1.5rem 0;
+  font-size: 1.08rem;
+  color: #166534;
+  font-weight: 500;
+}
+.info-card.info-welcome i {
+  font-size: 2.1rem;
+  color: #22c55e;
+  margin-top: 0.1rem;
+}
+.info-card .info-text {
+  flex: 1;
+  font-size: 1.08rem;
+  color: #166534;
+}
+
+.info-card.info-progress {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  background: #f0f9ff;
+  border: 1.5px solid #0ea5e9;
+  border-radius: 0.9rem;
+  padding: 1.2rem 1.5rem;
+  margin: 1.2rem 0 0.5rem 0;
+  box-shadow: 0 2px 8px rgba(14,165,233,0.07);
+  font-size: 1.08rem;
+  color: #0369a1;
+  animation: fadeIn 0.4s;
+}
+.info-card.info-progress i {
+  font-size: 2.1rem;
+  color: #0ea5e9;
+  background: #e0f2fe;
+  border-radius: 50%;
+  padding: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.info-card.info-progress .info-text {
+  flex: 1;
+  color: #0ea5e9;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* Info Card untuk status completed */
+.info-card.info-completed {
+  background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+  border: 1.5px solid #6366f1;
+  color: #3730a3;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+  box-shadow: 0 4px 16px rgba(99,102,241,0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.info-card.info-completed:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(99,102,241,0.20);
+}
+.info-card.info-completed i {
+  font-size: 2rem;
+  color: #6366f1;
+  background: rgba(99,102,241,0.1);
+  padding: 0.8rem;
+  border-radius: 50%;
+  min-width: 3.6rem;
+  text-align: center;
+}
+
+/* Info Card untuk status reviewed */
+.info-card.info-reviewed {
+  background: linear-gradient(135deg, #fef9c3 0%, #fef3c7 100%);
+  border: 1.5px solid #eab308;
+  color: #92400e;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+  box-shadow: 0 4px 16px rgba(234,179,8,0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.info-card.info-reviewed:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(234,179,8,0.20);
+}
+.info-card.info-reviewed i {
+  font-size: 2rem;
+  color: #eab308;
+  background: rgba(234,179,8,0.1);
+  padding: 0.8rem;
+  border-radius: 50%;
+  min-width: 3.6rem;
+  text-align: center;
+}
+
+/* Info Card untuk status paid */
+.info-card.info-paid {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  border: 1.5px solid #22c55e;
+  color: #166534;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+  box-shadow: 0 4px 16px rgba(34,197,94,0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.info-card.info-paid:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(34,197,94,0.20);
+}
+.info-card.info-paid i {
+  font-size: 2rem;
+  color: #22c55e;
+  background: rgba(34,197,94,0.1);
+  padding: 0.8rem;
+  border-radius: 50%;
+  min-width: 3.6rem;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .info-card.info-welcome { padding: 1rem 0.7rem; font-size: 0.98rem; }
+  .back-btn { font-size: 0.95rem; padding: 0.5rem 1rem; }
+} 
