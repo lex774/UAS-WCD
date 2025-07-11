@@ -34,6 +34,27 @@ if ($job['posted_by'] != $user_id) {
 
 // Ambil daftar pelamar
 $applicants = mysqli_query($conn, "SELECT a.*, u.name, u.email FROM applications a JOIN users u ON a.user_id = u.id WHERE a.job_id='$job_id' ORDER BY a.applied_at DESC");
+
+$status_seleksi = [
+    'menunggu',
+    'direview',
+    'terseleksi',
+    'interview',
+    'lolos',
+    'tidak_terseleksi',
+    'tidak_lolos'
+];
+$status_pekerjaan = [
+    'dikerjakan',
+    'sudah_dikerjakan',
+    'pekerjaan_selesai',
+    'menunggu_review',
+    'pekerjaan_sesuai',
+    'menunggu_pembayaran',
+    'pembayaran_sudah_dilakukan',
+    'menunggu_konfirmasi',
+    'completed'
+];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -301,6 +322,69 @@ $applicants = mysqli_query($conn, "SELECT a.*, u.name, u.email FROM applications
             position: relative;
             z-index: 5;
         }
+        .progress-action-card {
+            margin-top: 1rem;
+            padding: 1.1rem 1.5rem;
+            background: #f8fafc;
+            border-radius: 0.7rem;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.07);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .progress-action-card .btn {
+            font-size: 1rem;
+            padding: 0.6rem 1.3rem;
+        }
+        .sub-progress-card {
+            margin-top: 1.1rem;
+            background: #f0f9ff;
+            border: 1.5px solid #0ea5e9;
+            border-radius: 0.8rem;
+            box-shadow: 0 2px 8px rgba(14,165,233,0.07);
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 1.2rem;
+            animation: fadeIn 0.4s;
+        }
+        .sub-progress-content {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            width: 100%;
+        }
+        .sub-progress-icon {
+            font-size: 2.2rem;
+            color: #0ea5e9;
+            background: #e0f2fe;
+            border-radius: 50%;
+            padding: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sub-progress-text {
+            flex: 1;
+            font-size: 1.08rem;
+            color: #0369a1;
+        }
+        .sub-progress-btn {
+            font-size: 1rem;
+            padding: 0.7rem 1.5rem;
+            border-radius: 0.6rem;
+            background: #0ea5e9;
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(14,165,233,0.09);
+            transition: background 0.2s;
+        }
+        .sub-progress-btn:hover {
+            background: #0369a1;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -309,8 +393,14 @@ $applicants = mysqli_query($conn, "SELECT a.*, u.name, u.email FROM applications
         <h2>Daftar Pelamar</h2>
         <h3><?php echo htmlspecialchars($job['title']); ?> <span style="color:#6366f1;">(<?php echo htmlspecialchars($job['company_name']); ?>)</span></h3>
         
-        <div class="applicants-list-cards">
+        <!-- Tombol Aksi (Pemberi Kerja) -->
         <?php while ($app = mysqli_fetch_assoc($applicants)): ?>
+            <?php
+            // Cek apakah sudah ada review untuk pelamar ini pada job ini
+            $reviewed = false;
+            $review_check = mysqli_query($conn, "SELECT id FROM reviews WHERE reviewer_id='$user_id' AND reviewee_id='{$app['user_id']}' AND job_id='$job_id'");
+            if ($review_check && mysqli_num_rows($review_check) > 0) $reviewed = true;
+            ?>
             <div class="applicant-card" data-app-id="<?php echo $app['id']; ?>">
                 <div class="applicant-header">
                     <span class="applicant-name"><i class="fa fa-user"></i> <?php echo htmlspecialchars($app['name']); ?></span>
@@ -375,6 +465,20 @@ $applicants = mysqli_query($conn, "SELECT a.*, u.name, u.email FROM applications
                         </div>
                     </div>
                 </div>
+                <?php if (strtolower($app['status']) === 'lolos'): ?>
+                    <div class="sub-progress-card">
+                        <div class="sub-progress-content">
+                            <div class="sub-progress-icon"><i class="fa fa-location-arrow"></i></div>
+                            <div class="sub-progress-text">
+                                <strong>Pekerjaan sedang berlangsung!</strong><br>
+                                Pantau dan lacak progres pekerjaan pelamar ini secara real-time.
+                            </div>
+                            <button class="btn btn-primary sub-progress-btn" onclick="window.location='tracking-pekerjaan.php?app_id=<?= $app['id'] ?>'">
+                                <i class="fa fa-location-arrow"></i> Lacak Progres
+                            </button>
+                        </div>
+                    </div>
+                <?php endif; ?>
                 <div class="applicant-actions">
                     <a class="btn btn-outline btn-sm" href="../../user/uploads/cv/<?php echo htmlspecialchars(basename($app['cv_file'])); ?>" target="_blank">
                         <i class="fa fa-file-pdf"></i> Lihat CV
@@ -397,6 +501,71 @@ $applicants = mysqli_query($conn, "SELECT a.*, u.name, u.email FROM applications
         </div>
     </div>
     <div id="notif" class="notif"></div>
+    <!-- Modal Review -->
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeReviewModal()">&times;</span>
+            <h4>Beri Penilaian untuk <span id="revieweeName"></span></h4>
+            <form id="reviewForm">
+                <input type="hidden" name="reviewee_id" id="revieweeId">
+                <input type="hidden" name="job_id" id="reviewJobId">
+                <div style="margin-bottom:1rem;">
+                    <label for="rating">Rating:</label>
+                    <select name="rating" id="rating" required style="margin-left:0.7rem;">
+                        <option value="">Pilih rating</option>
+                        <option value="5">5 - Sangat Baik</option>
+                        <option value="4">4 - Baik</option>
+                        <option value="3">3 - Cukup</option>
+                        <option value="2">2 - Kurang</option>
+                        <option value="1">1 - Buruk</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:1rem;">
+                    <label for="comment">Komentar:</label><br>
+                    <textarea name="comment" id="comment" rows="4" style="width:100%;" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Kirim Penilaian</button>
+            </form>
+        </div>
+    </div>
+    <!-- Modal Pembayaran -->
+    <div id="paymentModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closePaymentModal()">&times;</span>
+        <h4>Transfer Pembayaran</h4>
+        <p>No Rekening Pekerja: <b id="workerBankAccount"></b></p>
+        <form id="paymentProofForm" enctype="multipart/form-data">
+          <input type="hidden" name="application_id" id="paymentAppId">
+          <label>Upload Bukti Transfer:</label>
+          <input type="file" name="payment_proof" accept="image/*,application/pdf" required>
+          <button type="submit" class="btn btn-success">Kirim Bukti Pembayaran</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal Penilaian -->
+    <div id="ratingModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeRatingModal()">&times;</span>
+        <h4>Beri Penilaian untuk Pekerja</h4>
+        <form id="ratingForm">
+          <input type="hidden" name="application_id" value="<?= $app['id'] ?>">
+          <label>Rating:</label>
+          <select name="rating" required>
+            <option value="">Pilih rating</option>
+            <option value="5">5 - Sangat Baik</option>
+            <option value="4">4 - Baik</option>
+            <option value="3">3 - Cukup</option>
+            <option value="2">2 - Kurang</option>
+            <option value="1">1 - Buruk</option>
+          </select>
+          <label>Komentar:</label>
+          <textarea name="comment" required></textarea>
+          <button type="submit" class="btn btn-primary">Kirim Penilaian</button>
+        </form>
+      </div>
+    </div>
+    <script src="../scripts/applicants-list.js"></script>
     <script>
     // Map status ke label (harus ada di JS agar update badge berjalan)
     const statusLabelMap = {
@@ -408,6 +577,66 @@ $applicants = mysqli_query($conn, "SELECT a.*, u.name, u.email FROM applications
         'tidak_terseleksi': 'Tidak Terseleksi',
         'tidak_lolos': 'Tidak Lolos'
     };
+    
+    // Update status lamaran (AJAX) - moved to top to ensure it's defined
+    function updateStatus(appId, status) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'update-application-status.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    showNotif('Status lamaran berhasil diupdate!');
+                    var card = document.querySelector('.applicant-card[data-app-id="' + appId + '"]');
+                    if (card) {
+                        // Update badge
+                        var badge = card.querySelector('.badge-status');
+                        if (badge) {
+                            badge.textContent = statusLabelMap[status] || status;
+                            badge.className = 'badge badge-status badge-' + status;
+                        }
+                        // Update tombol status
+                        var group = card.querySelector('.status-action-group');
+                        if (group) {
+                            var status_label_map = {
+                                'menunggu' => 'Menunggu',
+                                'direview' => 'Direview',
+                                'terseleksi' => 'Terseleksi',
+                                'interview' => 'Interview',
+                                'lolos' => 'Lolos',
+                                'tidak_terseleksi' => 'Tidak Terseleksi',
+                                'tidak_lolos' => 'Tidak Lolos'
+                            };
+                            var status_icons = {
+                                'menunggu': '<i class="fa fa-hourglass-half"></i>',
+                                'direview': '<i class="fa fa-search"></i>',
+                                'terseleksi': '<i class="fa fa-check-circle"></i>',
+                                'interview': '<i class="fa fa-comments"></i>',
+                                'lolos': '<i class="fa fa-trophy"></i>',
+                                'tidak_terseleksi': '<i class="fa fa-times-circle"></i>',
+                                'tidak_lolos': '<i class="fa fa-times-circle"></i>'
+                            };
+                            group.innerHTML = '';
+                            Object.keys(status_label_map).forEach(function(s) {
+                                if (s !== status) {
+                                    var btn = document.createElement('button');
+                                    btn.className = 'btn btn-outline btn-sm btn-status-' + s;
+                                    btn.style.fontWeight = '600';
+                                    btn.title = 'Ubah status ke ' + status_label_map[s];
+                                    btn.innerHTML = status_icons[s] + ' ' + status_label_map[s];
+                                    btn.onclick = function() { updateStatus(appId, s); };
+                                    group.appendChild(btn);
+                                }
+                            });
+                        }
+                    }
+                } else {
+                    showNotif('Gagal update status: ' + xhr.responseText);
+                }
+            }
+        };
+        xhr.send('id=' + appId + '&status=' + status);
+    }
     
     function showLamaranModalAjax(appId) {
         var modal = document.getElementById('lamaranModal');
@@ -440,70 +669,35 @@ $applicants = mysqli_query($conn, "SELECT a.*, u.name, u.email FROM applications
         notif.style.boxShadow = '0 2px 8px rgba(16,185,129,0.13)';
         setTimeout(()=>{ notif.style.display = 'none'; }, 2500);
     }
-    // Update status lamaran (AJAX)
-    function updateStatus(appId, status) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'update-application-status.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    showNotif('Status lamaran berhasil diupdate!');
-                    var card = document.querySelector('.applicant-card[data-app-id="' + appId + '"]');
-                    if (card) {
-                        // Update badge
-                        var badge = card.querySelector('.badge-status');
-                        if (badge) {
-                            badge.textContent = statusLabelMap[status] || status;
-                            badge.className = 'badge badge-status badge-' + status;
-                        }
-                        // Update tombol status
-                        var group = card.querySelector('.status-action-group');
-                        if (group) {
-                            var status_label_map = {
-                                'menunggu': 'Menunggu',
-                                'direview': 'Direview',
-                                'terseleksi': 'Terseleksi',
-                                'interview': 'Interview',
-                                'lolos': 'Lolos',
-                                'tidak_terseleksi': 'Tidak Terseleksi',
-                                'tidak_lolos': 'Tidak Lolos'
-                            };
-                            var status_icons = {
-                                'menunggu': '<i class="fa fa-hourglass-half"></i>',
-                                'direview': '<i class="fa fa-search"></i>',
-                                'terseleksi': '<i class="fa fa-check-circle"></i>',
-                                'interview': '<i class="fa fa-comments"></i>',
-                                'lolos': '<i class="fa fa-trophy"></i>',
-                                'tidak_terseleksi': '<i class="fa fa-times-circle"></i>',
-                                'tidak_lolos': '<i class="fa fa-times-circle"></i>'
-                            };
-                            group.innerHTML = '';
-                            Object.keys(status_label_map).forEach(function(s) {
-                                if (s !== status) {
-                                    var btn = document.createElement('button');
-                                    btn.className = 'btn btn-outline btn-sm btn-status-' + s;
-                                    btn.style.fontWeight = '600';
-                                    btn.title = 'Ubah status ke ' + status_label_map[s];
-                                    btn.innerHTML = status_icons[s] + ' ' + status_label_map[s];
-                                    btn.onclick = function() { updateStatus(appId, s); };
-                                    group.appendChild(btn);
-                                }
-                            });
-                        }
-                    }
-                } else {
-                    showNotif('Gagal update status: ' + xhr.responseText);
-                }
-            }
-        };
-        xhr.send('id=' + appId + '&status=' + status);
-    }
     // Modal close on click outside
     window.onclick = function(event) {
         var modal = document.getElementById('lamaranModal');
         if (event.target == modal) closeLamaranModal();
     }
+
+    function openReviewModal(revieweeId, jobId, revieweeName) {
+        document.getElementById('revieweeId').value = revieweeId;
+        document.getElementById('reviewJobId').value = jobId;
+        document.getElementById('revieweeName').textContent = revieweeName;
+        document.getElementById('reviewModal').classList.add('show');
+    }
+    function closeReviewModal() {
+        document.getElementById('reviewModal').classList.remove('show');
+    }
+    document.getElementById('reviewForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = new FormData(form);
+        const res = await fetch('submit-review.php', { method: 'POST', body: data });
+        const text = await res.text();
+        if (text.trim() === 'success') {
+            alert('Penilaian berhasil dikirim!');
+            closeReviewModal();
+            location.reload();
+        } else {
+            alert('Gagal mengirim penilaian: ' + text);
+        }
+    };
     </script>
 </body>
 </html> 

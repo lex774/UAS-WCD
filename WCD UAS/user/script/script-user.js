@@ -2,8 +2,8 @@ function toggleContent(targetId) {
     // Tutup semua konten yang ada
     const allContents = document.querySelectorAll('.card-content');
     allContents.forEach(card => {
-        card.classList.add('hidden');
         card.classList.remove('show');
+        card.classList.add('hidden');
     });
 
     // Remove active class from all stat items
@@ -25,6 +25,9 @@ function toggleContent(targetId) {
     if (content) {
         content.classList.remove('hidden');
         content.classList.add('show');
+        console.log('Menampilkan konten:', targetId, content.className);
+    } else {
+        console.log('Konten tidak ditemukan:', targetId);
     }
 }
 
@@ -156,11 +159,13 @@ function showNotification(message, type) {
 
 // Event Listener untuk setiap elemen statistik
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Dashboard JS loaded');
     const statItems = document.querySelectorAll('.stat-item');
     
     statItems.forEach(item => {
         item.addEventListener('click', () => {
             const targetId = item.getAttribute('data-target');
+            console.log('Tab diklik:', targetId);
             toggleContent(targetId);
         });
     });
@@ -516,4 +521,35 @@ if (window.location.pathname.includes('dashboard.php')) {
                 }
             });
     }, 5000); // polling setiap 5 detik
+}
+
+function showEmailModal(email) {
+    var modal = document.getElementById('emailModal');
+    var modalEmail = document.getElementById('modalEmail');
+    var copyNotif = document.getElementById('copyNotif');
+    if (modal && modalEmail) {
+        modalEmail.textContent = email;
+        modal.style.display = 'flex';
+        copyNotif.style.display = 'none';
+    }
+    var closeBtn = document.getElementById('closeEmailModal');
+    if (closeBtn) {
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        };
+    }
+    modal.onclick = function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+    var copyBtn = document.getElementById('copyEmailBtn');
+    if (copyBtn) {
+        copyBtn.onclick = function() {
+            navigator.clipboard.writeText(email).then(function() {
+                copyNotif.style.display = 'block';
+                setTimeout(function() { copyNotif.style.display = 'none'; }, 1500);
+            });
+        };
+    }
 }

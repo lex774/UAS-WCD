@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LocalLink - Login</title>
+    <title>Quick Lance - Login</title>
     <!-- Style CSS -->
     <link rel="stylesheet" href="../style/style-register.css">
     <!-- Bootstrap 5 CSS -->
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="signup-container shadow-lg">
         <div class="text-center mb-4">
             <i class="fa fa-briefcase fa-3x mb-2" style="color:#6366f1;"></i>
-            <h2 class="fw-bold mb-1">Masuk ke LocalLink</h2>
+            <h2 class="fw-bold mb-1">Masuk ke Quick Lance</h2>
             <p class="text-muted">Akses akunmu dengan Log-in disini</p>
         </div>
         <?php if (!empty($error)): ?>

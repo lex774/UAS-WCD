@@ -231,7 +231,7 @@ if (isset($_SESSION['user_id'])) {
                         <div>
                             <h3 class="text-lg font-semibold"><?php echo htmlspecialchars($job['posted_by_name']); ?></h3>
                             <p class="text-sm text-muted-foreground"><?php echo htmlspecialchars($job['posted_by_email']); ?></p>
-                            <a href="../../user/page/dashboard.php" class="button button-outline button-sm mt-2">
+                            <a href="../../user/page/profile.php?id=<?php echo $job['posted_by']; ?>" class="button button-outline button-sm mt-2">
                                 Lihat Profil
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1-5"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                             </a>
@@ -263,7 +263,7 @@ if (isset($_SESSION['user_id'])) {
     </div>
     <footer>
         <div class="footer-bottom">
-            <p>&copy; 2025 LocalLink. Seluruh Hak Cipta Dilindungi.</p>
+            <p>&copy; 2025 Quick Lance. Seluruh Hak Cipta Dilindungi.</p>
         </div>
     </footer>
 </body>

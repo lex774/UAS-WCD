@@ -8,15 +8,53 @@ require_once '../../src/db/connection.php';
 $user_id = $_SESSION['user_id'];
 $query = mysqli_query($conn, "SELECT name, email FROM users WHERE id='$user_id'");
 $user = mysqli_fetch_assoc($query);
+
+// Ambil data rekening dan nama bank
+$rekening = '';
+$bank_name = '';
+$rekening_query = mysqli_query($conn, "SELECT bank_account, bank_name FROM users WHERE id='$user_id'");
+if ($rekening_query) {
+    $rekening_row = mysqli_fetch_assoc($rekening_query);
+    $rekening = $rekening_row && $rekening_row['bank_account'] !== null ? $rekening_row['bank_account'] : '';
+    $bank_name = $rekening_row && $rekening_row['bank_name'] !== null ? $rekening_row['bank_name'] : '';
+}
+// Proses simpan rekening dan nama bank
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bank_account'], $_POST['bank_name'])) {
+    $new_rekening = trim($_POST['bank_account']);
+    $new_bank_name = trim($_POST['bank_name']);
+    mysqli_query($conn, "UPDATE users SET bank_account='" . mysqli_real_escape_string($conn, $new_rekening) . "', bank_name='" . mysqli_real_escape_string($conn, $new_bank_name) . "' WHERE id='$user_id'");
+    $rekening = $new_rekening;
+    $bank_name = $new_bank_name;
+    echo '<script>alert(\'Data bank berhasil disimpan!\');window.location.href=window.location.href;</script>';
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pengaturan - LocalFlow</title>
+  <title>Pengaturan - Quick Lance</title>
   <link rel="stylesheet" href="../style/style-setting.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> 
+  <style>
+    .input-dropdown {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: 1.5px solid #cbd5e1;
+      background: #f9fafb;
+      font-size: 1.08rem;
+      color: #222;
+      transition: border 0.18s, box-shadow 0.18s;
+      margin-bottom: 0.7rem;
+    }
+    .input-dropdown:focus {
+      border-color: #6366f1;
+      outline: none;
+      box-shadow: 0 0 0 2px #6366f133;
+    }
+  </style>
 </head>
 <body>
 
@@ -79,9 +117,37 @@ $user = mysqli_fetch_assoc($query);
         <!-- Payment Methods Card -->
         <div class="card">
           <h2 class="card-title"></i>Metode Pembayaran</h2>
-          <p class="card-description">Kelola metode pembayaran yang terhubung. (Placeholder)</p>
-          <p class="card-message">Belum ada metode pembayaran yang dikonfigurasi.</p>
-          <button class="card-button">Tambah Metode Pembayaran</button>
+          <p class="card-description">Kelola metode pembayaran yang terhubung.</p>
+          <form method="post" style="margin-bottom:1rem;">
+            <label for="bank_name" style="font-weight:600; color:#6366f1; margin-bottom:0.3rem; display:block;">Nama Bank</label>
+            <select id="bank_name" name="bank_name" required class="input-dropdown">
+              <option value="">Pilih Bank</option>
+              <option value="BCA" <?= $bank_name=="BCA"?'selected':'' ?>>BCA</option>
+              <option value="BRI" <?= $bank_name=="BRI"?'selected':'' ?>>BRI</option>
+              <option value="BNI" <?= $bank_name=="BNI"?'selected':'' ?>>BNI</option>
+              <option value="Mandiri" <?= $bank_name=="Mandiri"?'selected':'' ?>>Mandiri</option>
+              <option value="CIMB" <?= $bank_name=="CIMB"?'selected':'' ?>>CIMB</option>
+              <option value="BTN" <?= $bank_name=="BTN"?'selected':'' ?>>BTN</option>
+              <option value="Danamon" <?= $bank_name=="Danamon"?'selected':'' ?>>Danamon</option>
+              <option value="Permata" <?= $bank_name=="Permata"?'selected':'' ?>>Permata</option>
+              <option value="Maybank" <?= $bank_name=="Maybank"?'selected':'' ?>>Maybank</option>
+              <option value="Lainnya" <?= $bank_name=="Lainnya"?'selected':'' ?>>Lainnya</option>
+            </select>
+            <div style="font-size:0.97rem;color:#64748b;margin-bottom:0.7rem;">Pilih bank Anda. Jika tidak ada di daftar, pilih "Lainnya" dan isi manual di bawah.</div>
+            <div style="display:flex;align-items:center;gap:0.7rem;background:#f9fafb;border:1.5px solid #cbd5e1;border-radius:0.5rem;padding:0.5rem 1rem 0.5rem 0.8rem;">
+              <span style="color:#6366f1;font-size:1.3rem;"><i class="bi bi-bank2"></i></span>
+              <input type="text" id="bank_account" name="bank_account" value="<?= htmlspecialchars($rekening ?? '') ?>" placeholder="Masukkan nomor rekening Anda" required style="border:none;outline:none;background:transparent;font-size:1.08rem;width:100%;padding:0.5rem 0;" maxlength="50">
+            </div>
+            <div style="font-size:0.97rem;color:#64748b;margin:0.3rem 0 1rem 0;">Pastikan nomor rekening benar agar pembayaran tidak gagal.</div>
+            <button type="submit" class="card-button" style="margin-top:0.5rem;">Simpan Data Bank</button>
+          </form>
+          <?php if ($rekening && $bank_name): ?>
+            <p class="card-message"><b>Bank:</b> <?= htmlspecialchars($bank_name) ?> <br><b>Rekening:</b> <?= htmlspecialchars($rekening) ?></p>
+          <?php elseif ($rekening): ?>
+            <p class="card-message"><b>Rekening:</b> <?= htmlspecialchars($rekening) ?></p>
+          <?php else: ?>
+            <p class="card-message">Belum ada rekening yang disimpan.</p>
+          <?php endif; ?>
         </div>
 
         <!-- Security Card -->
@@ -124,7 +190,7 @@ $user = mysqli_fetch_assoc($query);
     <div>
       <hr>
       <div>
-        <p>&copy; 2025 LocalLink. Seluruh Hak Cipta Dilindungi.</p>
+        <p>&copy; 2025 Quick Lance. Seluruh Hak Cipta Dilindungi.</p>
         </div>
       <ul class="footer-links">
         <li><a href="terms-service.php">Syarat Layanan</a></li>

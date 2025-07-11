@@ -14,8 +14,7 @@ session_start();
     <header class="main-nav">
         <div class="header-content container">
              <div class="brand">
-                <img src="https://placehold.co/40x40/6366f1/white/png"  alt="LocalLink Logo" class="logo">
-                <span class="app-name">LocalLink</span>
+                <img src="../../asset/logo.png" alt="LocalLink Logo" class="logo">
              </div>
             <div class="nav-content container">
                 <ul>
@@ -35,14 +34,14 @@ session_start();
     <section class="container main-content">
         <section class="hero-section" id="hero">
             <h1 class="hero-title">
-                Selamat Datang di <span class="text-primary">LocalLink</span>
+                Selamat Datang di <span class="text-primary">Quick Lance</span>
             </h1>
             <p class="hero-description">
                 Platform pekerjaan sementara yang <b>mudah, inklusif, dan tanpa seleksi rumit</b>.<br>
                 Temukan atau tawarkan pekerjaan sederhana, bantu sesama, dan dapatkan penghasilan dengan cepat.
             </p>
             <p class="hero-tagline">
-                "Setiap orang berhak mendapat kesempatan bekerja. LocalLink, untuk semua."
+                "Setiap orang berhak mendapat kesempatan bekerja. Quick Lance, untuk semua."
             </p>
         </section>
         <section class="hero">
@@ -72,7 +71,7 @@ session_start();
     </section>
 
     <section class="features-section" id="features">
-        <h2 class="section-title">Fitur Unggulan LocalLink</h2>
+        <h2 class="section-title">Fitur Unggulan Quick Lance</h2>
         <div class="features-grid">
             <div class="feature-card">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-lg icon-primary mx-auto mb-4"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
@@ -102,7 +101,7 @@ session_start();
         <h2>Apa Kata Mereka?</h2>
         <div class="testimonials-list">
             <blockquote class="testimonial-card">
-                "Saya bisa dapat penghasilan tambahan tanpa ribet. LocalLink sangat membantu!"<br>
+                "Saya bisa dapat penghasilan tambahan tanpa ribet. Quick Lance sangat membantu!"<br>
                 <span class="testimonial-author">- Rina, Mahasiswa</span>
             </blockquote>
             <blockquote class="testimonial-card">
@@ -110,11 +109,11 @@ session_start();
                 <br><span class="testimonial-author">- Pak Budi, Pengguna</span>
             </blockquote>
             <blockquote class="testimonial-card">
-                "Saya merekomendasikan LocalLink ke teman-teman saya. Prosesnya cepat dan transparan!"
+                "Saya merekomendasikan Quick Lance ke teman-teman saya. Prosesnya cepat dan transparan!"
                 <br><span class="testimonial-author">- Siti, Freelancer</span>
             </blockquote>
             <blockquote class="testimonial-card">
-                "Berkat LocalLink, saya bisa menemukan pekerjaan harian yang sesuai jadwal kuliah saya. Sangat fleksibel!"
+                "Berkat Quick Lance, saya bisa menemukan pekerjaan harian yang sesuai jadwal kuliah saya. Sangat fleksibel!"
                 <br><span class="testimonial-author">- Andi, Mahasiswa</span>
             </blockquote>
         </div>
@@ -125,24 +124,40 @@ session_start();
             <div class="how-it-works-content">
                 <div class="how-it-works-image">
                     <img 
-                        src="https://placehold.co/600x400.png" 
+                        src="../../asset/illustrasi.jpg" 
                         alt="Ilustrasi orang saling terhubung" 
                     >
                 </div>
-                <div class="how-it-works-steps">
-                    <div class="step">
-                        <h4 class="step-title">1. Daftar & Buat Profil</h4>
-                        <p class="step-description">Bergabung dengan LocalLink hanya dalam beberapa menit. Buat profil untuk menonjolkan keahlian Anda atau jelaskan kebutuhan pekerjaan Anda.</p>
-                    </div>
-                    <div class="step">
-                        <h4 class="step-title">2. Pasang atau Cari Pekerjaan</h4>
-                        <p class="step-description">Pasang lowongan pekerjaan secara mudah atau cari peluang kerja yang sesuai keahlian dan lokasi Anda.</p>
-                    </div>
-                    <div class="step">
-                        <h4 class="step-title">3. Terhubung & Kolaborasi</h4>
-                        <p class="step-description">Komunikasi aman, sepakati syarat, dan mulai bekerja sama. LocalLink memudahkan kolaborasi tanpa hambatan.</p>
-                    </div>
-                </div>
+                <ul class="how-list">
+  <li class="how-card">
+    <span class="how-badge">1</span>
+    <div>
+      <div class="how-card-title">Daftar & Lengkapi Profil</div>
+      <div class="how-card-desc">Buat akun dan lengkapi profil Anda untuk mulai menggunakan platform.</div>
+    </div>
+  </li>
+  <li class="how-card">
+    <span class="how-badge">2</span>
+    <div>
+      <div class="how-card-title">Cari atau Pasang Lowongan</div>
+      <div class="how-card-desc">Temukan pekerjaan atau pasang lowongan sesuai kebutuhan Anda.</div>
+    </div>
+  </li>
+  <li class="how-card">
+    <span class="how-badge">3</span>
+    <div>
+      <div class="how-card-title">Lamar atau Terima Pelamar</div>
+      <div class="how-card-desc">Lamar pekerjaan yang diminati atau terima pelamar yang sesuai.</div>
+    </div>
+  </li>
+  <li class="how-card">
+    <span class="how-badge">4</span>
+    <div>
+      <div class="how-card-title">Selesaikan & Dapatkan Pembayaran</div>
+      <div class="how-card-desc">Selesaikan pekerjaan dan dapatkan pembayaran dengan aman.</div>
+    </div>
+  </li>
+</ul>
             </div>
     </section>
 
@@ -150,8 +165,7 @@ session_start();
         <div class="footer-container">
             <!-- Brand -->
             <div class="footer-brand">
-                <img src="https://via.placeholder.com/40"  alt="Logo LocalLink" class="footer-logo">
-                <h3>LocalLink</h3>
+                <img src="../../asset/logo.png" alt="Logo" class="footer-logo">
                 <p>Platform yang menyediakan peluang kerja sementara untuk semua.</p>
             </div>
     
@@ -188,7 +202,7 @@ session_start();
     
         <!-- Copyright -->
         <div class="footer-bottom">
-            <p>&copy; 2025 LocalLink. Hak Cipta Dilindungi.</p>
+            <p>&copy; 2025 Quick Lance. Hak Cipta Dilindungi.</p>
         </div>
     </footer>
 

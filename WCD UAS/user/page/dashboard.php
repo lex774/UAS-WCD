@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 require_once '../../src/db/connection.php';
 session_start();
 if (!isset($_SESSION['user_id'])) {
@@ -19,6 +21,28 @@ $notifications = [];
 while ($n = mysqli_fetch_assoc($notif_query)) {
     $notifications[] = $n;
 }
+
+// Definisi status progress agar tidak error
+$status_seleksi = [
+    'menunggu',
+    'direview',
+    'terseleksi',
+    'interview',
+    'lolos',
+    'tidak_terseleksi',
+    'tidak_lolos'
+];
+$status_pekerjaan = [
+    'dikerjakan',
+    'sudah_dikerjakan',
+    'pekerjaan_selesai',
+    'menunggu_review',
+    'pekerjaan_sesuai',
+    'menunggu_pembayaran',
+    'pembayaran_sudah_dilakukan',
+    'menunggu_konfirmasi',
+    'completed'
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,109 +54,12 @@ while ($n = mysqli_fetch_assoc($notif_query)) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="../style/dashboard.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../styles/jobs.css">
-    <style>
-.badge-status-menunggu {
-    background: #f3f4f6; color: #6366f1; border: 1.5px solid #6366f1;
-}
-.badge-status-direview {
-    background: #f0f9ff; color: #0ea5e9; border: 1.5px solid #0ea5e9;
-}
-.badge-status-terseleksi {
-    background: #f0fdf4; color: #22c55e; border: 1.5px solid #22c55e;
-}
-.badge-status-interview {
-    background: #fef9c3; color: #eab308; border: 1.5px solid #eab308;
-}
-.badge-status-lolos {
-    background: #f0fdf4; color: #16a34a; border: 1.5px solid #16a34a;
-}
-.badge-status-tidak_terseleksi, .badge-status-tidak_lolos {
-    background: #fef2f2; color: #ef4444; border: 1.5px solid #ef4444;
-}
-.badge-status {
-    border-radius: 0.6rem;
-    padding: 0.38rem 1.1rem;
-    font-size: 1rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 600;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-    margin-left: 0.3rem;
-}
-.btn-status-detail.badge-open {
-    background: #f3f4f6; color: #6366f1; border-color: #6366f1;
-}
-.btn-status-detail.badge-closed {
-    background: #fef2f2; color: #ef4444; border-color: #ef4444;
-}
-.btn-status-detail:hover, .btn-status-detail:focus {
-    filter: brightness(0.97) contrast(1.1);
-    box-shadow: 0 2px 8px rgba(99,102,241,0.10);
-    transform: translateY(-2px) scale(1.03);
-    text-decoration: none;
-}
-.badge-status,
-.btn-status-detail {
-    padding: 0.22rem 0.8rem !important;
-    font-size: 0.92rem !important;
-    border-radius: 0.45rem !important;
-}
-.preview-lamaran-modal, .preview-lamaran-content {
-    font-size: 0.97rem !important;
-    line-height: 1.5;
-    color: #333;
-}
-.preview-lamaran-modal h3, .preview-lamaran-content h3 {
-    font-size: 1.08rem !important;
-    margin-bottom: 0.7rem;
-}
-.preview-lamaran-modal p, .preview-lamaran-content p {
-    font-size: 0.97rem !important;
-    margin-bottom: 0.5rem;
-}
-.preview-modal-close {
-    position: absolute;
-    top: 12px;
-    right: 18px;
-    cursor: pointer;
-    font-size: 1.7rem;
-    color: #6366f1;
-    background: none;
-    border: none;
-    z-index: 2;
-    transition: color 0.2s;
-}
-.preview-modal-close:hover {
-    color: #ef4444;
-    background: none !important;
-    transform: none !important;
-    box-shadow: none !important;
-}
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 60px;
-    background: #fff;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-    border-radius: 0.5rem;
-    min-width: 160px;
-    z-index: 1001;
-    animation: fadeInDropdown 0.2s ease-in-out;
-}
-.dropdown-menu.show {
-    display: block;
-}
-</style>
 </head>
 <body>
 <header class="main-nav">
     <div class="header-content container">
          <div class="brand">
-            <img src="https://placehold.co/40x40/6366f1/white/png"  alt="LocalLink Logo" class="logo">
-            <span class="app-name">LocalLink</span>
+            <img src="../../asset/logo.png" alt="LocalLink Logo" class="logo">
          </div>
         <div class="nav-content container">
             <ul>
@@ -335,16 +262,32 @@ while ($n = mysqli_fetch_assoc($notif_query)) {
                                 </span>
                             <?php endif; ?>
                         </div>
-                        <div class="application-actions">
+                        <div class="application-actions" style="display: flex; flex-direction: row; gap: 0.5rem; align-items: center; margin-top: 0.7rem;">
+                            <?php if ($app['status'] !== 'lolos'): ?>
                             <button class="btn btn-outline btn-sm" onclick="viewApplicationDetails(<?php echo $app['id']; ?>)">
                                 <i class="fa fa-eye"></i> Lihat Lamaran
                             </button>
+                            <?php endif; ?>
                             <?php if (!empty($app['company_email'])): ?>
-                                <button class="btn-contact-hrd" style="margin-left: 0.5rem;" onclick="showEmailModal('<?php echo htmlspecialchars($app['company_email']); ?>')">
-                                    <i class="fa fa-envelope"></i> Contact HRD
-                                </button>
+                            <button class="btn-contact-hrd" style="margin-left: auto;" onclick="showEmailModal('<?php echo htmlspecialchars($app['company_email']); ?>')">
+                                <i class="fa fa-envelope"></i> Contact HRD
+                            </button>
                             <?php endif; ?>
                         </div>
+                        <?php if (strtolower($app['status']) === 'lolos'): ?>
+    <div class="sub-progress-card sub-progress-green">
+        <div class="sub-progress-content">
+            <div class="sub-progress-icon"><i class="fa fa-check-circle"></i></div>
+            <div class="sub-progress-text">
+                <strong>Selamat, kamu telah lolos seleksi!</strong><br>
+                Yuk mulai perjalanan kerjamu dan update progres pekerjaan di sini.
+            </div>
+            <button class="btn btn-success sub-progress-btn" onclick="window.location='../../src/pages/update-progress.php?application_id=<?= $app['id'] ?>'">
+                <i class="fa fa-location-arrow"></i> Progress Pekerjaan
+            </button>
+        </div>
+    </div>
+<?php endif; ?>
                     </li>
                 <?php endwhile; ?>
                 </ul>
@@ -380,7 +323,7 @@ while ($n = mysqli_fetch_assoc($notif_query)) {
 <?php endif; ?>
     <footer>
         <div class="footer-bottom">
-            <p>&copy; 2025 LocalLink. Seluruh Hak Cipta Dilindungi.</p>
+            <p>&copy; 2025 Quick Lance. Seluruh Hak Cipta Dilindungi.</p>
         </div>
     </footer>
     <!-- Modal Fullscreen Avatar -->

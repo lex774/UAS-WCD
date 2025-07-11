@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LocalLink - Daftar Akun</title>
+    <title>Quick Lance - Daftar Akun</title>
     <link rel="stylesheet" href="../style/style-register.css">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="signup-container shadow-lg">
         <div class="text-center mb-4">
             <i class="fa fa-briefcase fa-3x mb-2" style="color:#6366f1;"></i>
-            <h2 class="fw-bold mb-1">Buat Akun LocalLink</h2>
+            <h2 class="fw-bold mb-1">Buat Akun Quick Lance</h2>
             <p class="text-muted">Gabung dan mulai temukan atau tawarkan pekerjaan sederhana, bantu sesama, dan dapatkan penghasilan dengan cepat.</p>
         </div>
         <?php if (!empty($error)): ?>

@@ -6,7 +6,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Syarat Layanan - LocalFlow</title>
+    <title>Syarat Layanan - Quick Lance</title>
     <link rel="stylesheet" href="../style/style-terms.css">
 </head>
 <body>
@@ -67,7 +67,7 @@ session_start();
     <div>
       <hr>
       <div>
-        <p style="text-align: center;">&copy; 2025 LocalLink. Seluruh Hak Cipta Dilindungi.</p>
+        <p style="text-align: center;">&copy; 2025 Quick Lance. Seluruh Hak Cipta Dilindungi.</p>
         </div>
       <ul class="footer-links">
         <li><a href="../../user/page/terms-service.php">Syarat Layanan</a></li>

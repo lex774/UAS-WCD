@@ -39,22 +39,33 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-height: 5.5rem;
 }
 
 .brand {
     display: flex;
     align-items: center;
-    gap: 0.5rem; /* gap-2 */
-    font-size: 1.5rem; /* text-xl */
-    font-weight: 700; /* font-bold */
+    gap: 0.7rem;
+    font-size: 2rem;
+    font-weight: 700;
     color: #333;
     text-decoration: none;
 }
 
 .brand .logo {
-    height: 2.5rem; /* h-10 */
-    width: 2.5rem; /* w-10 */
-    border-radius: 0.25rem; /* rounded */
+    height: 4.5rem;
+    width: 4.5rem;
+    border-radius: 0.25rem;
+    object-fit: contain;
+    margin: 0;
+    background: transparent;
+    box-shadow: none;
+}
+@media (max-width: 700px) {
+  .brand .logo {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
 }
 
 .auth-buttons {
@@ -1644,4 +1655,112 @@ select.btn.btn-outline.btn-sm:hover {
 @media (max-width: 600px) {
   .notif-panel { min-width: 90vw; max-width: 98vw; right: 0; left: 0; margin: 0 auto; }
   .dropdown-menu { min-width: 70vw; right: 0; left: auto; }
+} 
+
+/* Override tab dashboard agar tidak bentrok class */
+.card-content { display: none !important; }
+.card-content.show { display: block !important; }
+.card-content.hidden { display: none !important; } 
+
+.progress-action-card {
+  margin-top: 1rem;
+  padding: 1.1rem 1.5rem;
+  background: #f8fafc;
+  border-radius: 0.7rem;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.07);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+.progress-action-card .btn {
+  font-size: 1rem;
+  padding: 0.6rem 1.3rem;
+} 
+
+.sub-progress-card {
+  margin-top: 1.1rem;
+  background: #f0f9ff;
+  border: 1.5px solid #0ea5e9;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 8px rgba(14,165,233,0.07);
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.2rem;
+  animation: fadeIn 0.4s;
+}
+.sub-progress-content {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  width: 100%;
+}
+.sub-progress-icon {
+  font-size: 2.2rem;
+  color: #0ea5e9;
+  background: #e0f2fe;
+  border-radius: 50%;
+  padding: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sub-progress-text {
+  flex: 1;
+  font-size: 1.08rem;
+  color: #0369a1;
+}
+.sub-progress-btn {
+  font-size: 1rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 0.6rem;
+  background: #0ea5e9;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(14,165,233,0.09);
+  transition: background 0.2s;
+}
+.sub-progress-btn:hover {
+  background: #0369a1;
+  color: #fff;
+} 
+
+.sub-progress-green {
+  background: #f0fdf4;
+  border: 1.5px solid #16a34a;
+  box-shadow: 0 2px 8px rgba(22,163,74,0.07);
+}
+.sub-progress-green .sub-progress-icon {
+  color: #16a34a;
+  background: #e0fbe5;
+}
+.sub-progress-green .sub-progress-text {
+  color: #166534;
+} 
+
+.sub-progress-blue {
+  background: #f0f9ff;
+  border: 1.5px solid #0ea5e9;
+  box-shadow: 0 2px 8px rgba(14,165,233,0.07);
+}
+.sub-progress-blue .sub-progress-icon {
+  color: #0ea5e9;
+  background: #e0f2fe;
+}
+.sub-progress-blue .sub-progress-text {
+  color: #0369a1;
+}
+.sub-progress-gray {
+  background: #f3f4f6;
+  border: 1.5px solid #9ca3af;
+  box-shadow: 0 2px 8px rgba(156,163,175,0.07);
+}
+.sub-progress-gray .sub-progress-icon {
+  color: #6b7280;
+  background: #e5e7eb;
+}
+.sub-progress-gray .sub-progress-text {
+  color: #374151;
 } 

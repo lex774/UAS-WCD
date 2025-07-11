@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Footer -->
     <footer>
         <div class="footer-bottom">
-            <p>&copy; 2025 LocalLink. Seluruh Hak Cipta Dilindungi.</p>
+            <p>&copy; 2025 Quick Lance. Seluruh Hak Cipta Dilindungi.</p>
         </div>
     </footer>
     <link rel="stylesheet" href="../styles/apply-job.css">
